@@ -26,6 +26,7 @@ igazolta: teszt, éles futás a 100 mintán, független kontroll, böngészős t
 | A `.env.example` nem létező LLM-funkciót írt le | átnézés a "csak azt írd, amit a kód csinál" szabállyal |
 | Szóközös számlaszámból (`PT 2026 1`) csendben `2026` lett, "rendben" állapottal | végponti teszt szélsőséges szintetikus számlákkal |
 | Csonka PDF-re "szkennelt kép?" üzenet | ugyanez a végponti teszt, az üzenetek kiírásával |
+| A szándékosan megszüntetett `.env.example` visszahozását javasolta | a napló 14. lépésének utólagos olvasása |
 
 **Ahol nem bíztam meg az AI eredményében:** a "100/100 ok" csak belső összhangot jelentett, ezért kértem
 független kontrollt (fizetési feltétel vs. dátumok; a számlára nyomtatott MNB-árfolyam vs. az MNB-válasz).
@@ -327,3 +328,17 @@ pagination", "oldalanként fetchelje és a kereső is működjön fetchként".
   előfeltétele kimondja, hogy az első buildhez internet kell; a betű helyi tárolása ezen nem változtatna, mert a
   pip és az npm is a hálózatról tölt.
 - **Ellenőrzés:** 214 pytest; `tsc`.
+
+## 18. Leadás előtti átnézés: git history és `.env.example` (2026-11-23)
+
+- **Kérés:** "commitoltam, nézd meg hogy minden rendben van e".
+- **Átnézés:** a kulcs a teljes historyban sehol (keresés a valódi kulcsra); 214 pytest; `tsc`; a leadandók a
+  feladatleírás szerint. Fő hiba: a munka egyetlen "first commit"-ban került fel, a feladat szerint ez nem elfogadható.
+- **A history utólagos bontása:** a fejlesztés közben nem commitoltam lépésenként, ezt pótoltuk. A végleges fájlok
+  kilenc commitba kerültek, a napló lépéseinek sorrendjében (repó-alap, adatfelmérés, kinyerő, MNB, tárolás és
+  összesítés, API, felület, Docker, dokumentáció), utána force-push. A commitok a végső kódot tartalmazzák, nem a
+  köztes állapotokat, ezért nem mind futtathatók önmagukban, és a dátumuk a bontás napja. Ellenőrzés: a régi és az
+  új végső fa közti különbség csak az új `.env.example`; 214 pytest.
+- **AI-tévedés:** a `.env.example` visszahozását az AI "hiányzik, a feladat kéri" alapon javasolta, holott a 14.
+  lépésben szándékosan szűnt meg, mert semmi nem olvasta. A napló utólagos olvasása fogta meg. Megtartottuk: a
+  feladat kéri, és most csak azt mondja ki, hogy kulcs nem kell, a beállítások a `docker-compose.yml`-ben vannak.

@@ -14,7 +14,7 @@ docker compose up --build
 
 Az alkalmazás: **http://localhost:8080**
 
-API-kulcs nem kell, mert az alkalmazás nem használ LLM-et (lásd lent), ezért `.env` sincs.
+API-kulcs nem kell, mert az alkalmazás nem használ LLM-et (lásd lent), ezért `.env` sincs; a `.env.example` csak ezt rögzíti.
 
 Beállítások: környezeti változók, mind kötelező; ha valamelyik hiányzik, a szolgáltatás hibával leáll, nincs
 beégetett alapérték. Az értékek a `docker-compose.yml`-ben vannak.
