@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: runtime
+    environment:
+      OUR_COMPANY_NAME: Nordwind Solutions Kft.
+      OUR_TAX_IDS: 26481937-2-43,HU26481937
+      MNB_ENDPOINT: http://www.mnb.hu/arfolyamok.asmx
+    volumes:
+      - invoice-data:/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "8080:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  tests:
+    profiles: ["test"]
+    build:
+      context: ./backend
+      target: test
+      additional_contexts:
+        samples: ./invoices
+
+volumes:
+  invoice-data:
